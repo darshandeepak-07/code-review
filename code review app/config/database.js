@@ -3,7 +3,7 @@ require('dotenv').config();
 const connectionString = process.env.MONGO_CLIENT1;
 
 mongoose.connect(connectionString);
-
+// DB decalration
 const db = mongoose.connection;
 db.on('open', ()=>{
     console.log("Connected to Database")
