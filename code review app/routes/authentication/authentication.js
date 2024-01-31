@@ -1,9 +1,8 @@
 const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 const router = express.Router();
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false }));
 const {
   registerUser,
   userLogin,
