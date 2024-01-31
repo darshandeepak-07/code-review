@@ -1,50 +1,7 @@
 const db = require("../../config/db");
 const User = require("../../models/user/user");
-const bcrypt = require("bcrypt");
-const Role = require("../../models/role/role");
-const { json } = require("body-parser");
-
-//for creating hash
-const createHash = async (password) => {
-  const hash = await bcrypt.hash(password, 10);
-  return hash;
-};
-
-const findRole = async (role) => {
-  try {
-    const data = await Role.findOne({ name: role });
-    if (data) {
-      return data;
-    } else {
-      const newData = await createRole(role);
-      return newData;
-    }
-  } catch (error) {
-    return error;
-  }
-};
-
-const createRole = async (roleName) => {
-  let description = "";
-  try {
-    if (roleName === "admin") {
-      description =
-        "im a admin and i have all the master controls over the application";
-    } else if (roleName === "submitter") {
-      description = "im a submitter i submit my code for review.";
-    } else if (roleName === "reviewer") {
-      description =
-        " im a reviewer i review the codes submitted by the submitter, and i add comments.";
-    } else {
-      return new Error("invalid role");
-    }
-    const role = new Role({ name: roleName, description });
-    const data = await role.save();
-    return data;
-  } catch (error) {
-    return error;
-  }
-};
+const { findRole } = require("../../middlewares/authMiddleware");
+const { createHash, compareHash } = require("../../middlewares/bcrypt");
 
 //registration
 const registerUser = async (request, response) => {
@@ -80,9 +37,7 @@ const userLogin = async (request, response) => {
   try {
     if (request.body) {
       const user = await User.findOne({ email: request.body.email });
-      console.log(user);
-      console.log(user.password);
-      const auth = await bcrypt.compare(request.body.password, user.password);
+      const auth = await compareHash(request.body.password, user.password);
       if (auth) {
         response.send("authenticated");
       } else {
