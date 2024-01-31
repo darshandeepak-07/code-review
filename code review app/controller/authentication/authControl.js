@@ -2,6 +2,8 @@ const db = require("../../config/db");
 const User = require("../../models/user/user");
 const bcrypt = require("bcrypt");
 const Role = require("../../models/role/role");
+const { json } = require("body-parser");
+
 //for creating hash
 const createHash = async (password) => {
   const hash = await bcrypt.hash(password, 10);
@@ -13,11 +15,37 @@ const findRole = async (role) => {
     const data = await Role.findOne({ name: role });
     if (data) {
       return data;
+    } else {
+      const newData = await createRole(role);
+      return newData;
     }
   } catch (error) {
     return error;
   }
 };
+
+const createRole = async (roleName) => {
+  let description = "";
+  try {
+    if (roleName === "admin") {
+      description =
+        "im a admin and i have all the master controls over the application";
+    } else if (roleName === "submitter") {
+      description = "im a submitter i submit my code for review.";
+    } else if (roleName === "reviewer") {
+      description =
+        " im a reviewer i review the codes submitted by the submitter, and i add comments.";
+    } else {
+      return new Error("invalid role");
+    }
+    const role = new Role({ name: roleName, description });
+    const data = await role.save();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 //registration
 const registerUser = async (request, response) => {
   if (request.body) {
@@ -26,12 +54,10 @@ const registerUser = async (request, response) => {
     try {
       const hash = await createHash(request.body.password);
       const role = await findRole(request.body.role);
-      console.log(role);
       if (role) {
         request.body.role = role._id;
       }
       request.body.password = hash;
-      console.log(request.body);
       const user = new User({
         ...request.body,
         registerDate,
@@ -42,7 +68,7 @@ const registerUser = async (request, response) => {
     } catch (error) {
       console.log(error);
       if (error.code === 11000) response.send("user already present");
-      else response.send("not success");
+      else response.send(JSON.stringify(error.message));
     }
   } else {
     response.status(404).send("data not received");
