@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   registerDate: { type: String, required: true },
   totalRevision: { type: Number, required: true ,default : 0},
 });
-
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

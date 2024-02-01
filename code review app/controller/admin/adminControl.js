@@ -10,10 +10,10 @@ const getUsers = async (request, response) => {
         "role",
         "userId",
         "email",
-        "registerData",
+        "registerDate",
         "totalRevision",
       ])
-      .populate("role", "name");
+      .populate("role");
     response.send(userData);
   } catch (error) {
     response.status(404).send("user not found");

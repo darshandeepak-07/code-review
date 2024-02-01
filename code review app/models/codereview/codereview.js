@@ -7,8 +7,15 @@ const codeReviewSchema = new mongoose.Schema({
     reviewId : {type :String,default:uuidv4 ,unique:true,required:true},
     repositoryURL : {type: String, required: true},
     createdBy : {type:mongoose.Schema.Types.ObjectId , ref: 'User', required:true},
-    createdAt : {type: Date, default: Date.now},
-    comments : {type:mongoose.Schema.Types.ObjectId , ref : 'Comment'},
+    createdAt : {type: String, default: function(){
+        const date = new Date();
+        return date.toLocaleDateString('en-US',{
+            year: 'numeric',
+            month:'long',
+            day : '2-digit'
+        });
+    }},
+    comments : [{type:mongoose.Schema.Types.ObjectId , ref : 'Comment'}],
     reviewers : [{type: mongoose.Schema.Types.ObjectId, ref : 'User'}]
 })
 

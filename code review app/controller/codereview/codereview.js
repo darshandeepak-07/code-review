@@ -29,6 +29,7 @@ const createReview = async(request,response)=>{
         
         try{
             setTimeout(async()=>{
+                await User.findOneAndUpdate({userId:request.params.userId},{$inc:{totalRevision:1}});
                 await codeReview.save();
                 response.send("Review created successfully");
             },2000);
@@ -41,7 +42,75 @@ const createReview = async(request,response)=>{
     }
 }
 
+const getReview = async(request,response)=>{
+    const reviewid = request.params.reviewId;
+    try{
+        const review = await CodeReview.findOne({reviewId:reviewid})
+        .select('-reviewId -_id -__v')
+        .populate(
+            {
+                path : 'reviewers',
+                select : '-password -userId -totalRevision -_id -role -__v'
+            }
+        );
+        response.status(200).send(review);
+    }catch(err){
+        response.send("Error getting review")
+        console.log("Error getting Review "+err )
+    }
 
+}
+
+const editReview = async(request,response)=>{
+    const reviewid = request.params.reviewId;
+    try{
+        
+        await CodeReview.findOneAndUpdate({reviewId:reviewid},{$set:request.body},{new:true})
+       
+        response.status(200).send("Review Updated Successfully");
+    }catch(err){
+        response.status(400).send("Error Editing Review "+err);
+    }
+}
+
+const deleteReview = async(request,response)=>{
+    const reviewid = request.params.reviewId;
+
+    try{
+        const review = await CodeReview.findOne({reviewId:reviewid});
+        await User.findByIdAndUpdate(review.createdBy,{$inc:{totalRevision:-1}})
+        setTimeout(()=>{
+            review.deleteOne()
+            .then(res=> response.status(200).send("Review Deleted Successfully"))
+            .catch(err=>response.status(400).send("Error deleting review "+err));
+           
+        },1000);
+        
+        
+    }catch(err){
+        response.status(400).send("Error deleting review "+err);
+    }
+}
+
+const getReviews = async(request,response)=>{
+    try{
+        const reviews = await CodeReview.find({})
+        .select('-reviewId -_id -__v')
+        .populate(
+            {
+                path : 'reviewers',
+                select : '-password -userId -totalRevision -_id -role -__v'
+            }
+        );
+        response.status(200).send(reviews)
+    }catch(err){
+        response.status(400).send("Error fetching code reviews")
+    }
+}
 module.exports = {
-    createReview
+    createReview,
+    getReview,
+    editReview,
+    deleteReview,
+    getReviews
 }
