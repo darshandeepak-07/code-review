@@ -1,6 +1,7 @@
 const User = require("../../models/user/user");
 const Role = require("../../models/role/role");
 const { findRole } = require("../../middlewares/authMiddleware");
+
 const getUsers = async (request, response) => {
   try {
     const userData = await User.find()
@@ -21,21 +22,19 @@ const getUsers = async (request, response) => {
 
 const editUser = async (request, response) => {
   try {
-    if (request.body.role) {
+    const oldRole = await User.findOne({ userId: request.params.id }).select([
+      "role",
+    ]);
+    if (oldRole.role !== request.body.role) {
       const role = await findRole(request.body.role);
-      if (role) {
-        request.body.role = role._id;
-      } else throw new Error("no role found");
+      if (role) request.body.role = role._id;
+      else throw new Error("no role found");
     }
     const currentUser = await User.findOneAndUpdate(
       { userId: request.params.id },
-      {
-        name: request.body.name,
-        role: request.body.role,
-      },
+      { name: request.body.name, role: request.body.role },
       { new: true }
     );
-    console.log(currentUser);
     if (currentUser) {
       response.send("user edited");
     } else {
