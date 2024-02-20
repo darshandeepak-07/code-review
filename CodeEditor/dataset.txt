@@ -1,0 +1,379 @@
+let m=100
+    function var_do() {
+      const c=5;
+      console.log('Local Variable', c)
+      console.log('Global Variable', m) 
+      m=60;
+     
+      console.log('Global Variable after change in value ', m); 
+    
+      const b=80;
+      console.log('Const value ', b);
+      b=70;
+    }
+    console.log('Global Variable outside function after value change ', m); 
+    function t_exec() {
+      const num=100;
+      const el=document.getElementById('out');
+      el.innerHTML=num+':'+typeof num+'<br>';
+      const v='abc';
+      el.innerHTML+=v+':'+typeof v;
+    }
+    const a=10;
+    const b=a+7;
+    console.log(a);
+    console.log(b);
+    let k;
+    console.log(typeof k);
+    if (typeof k=='undefined') {
+      console.log('k is not defined');
+    }
+    const h=null;
+    console.log(typeof h);
+    if (h==null) {
+      console.log('The value of h is null');
+    }
+    const f=true;
+    console.log('f is ', typeof f);
+    const d=0;
+    console.log('d is '+Boolean(d)); 
+    const r=100;
+    const o=new Number(70);
+    const j=12e4; 
+    const s=13.5;
+    console.log(r); console.log(o); console.log(j); console.log(s);
+    const name='Deepak';
+    console.log(name);
+    function display() {
+      const e=document.getElementById('out1');
+      const text=document.getElementById('nm').value;
+      e.innerHTML='The text to display is :'+text;
+    }
+    
+ 
+    n='male';
+    const boy={gender: n, age: 20};
+    console.log('Object by literal : ', boy.gender, boy.age);
+    
+   
+    const obj=new Object();
+    obj.name='Deepak';
+    obj.age=20;
+    obj.gender='male';
+    console.log('Object by instance ', obj.name, obj.age, obj.gender);
+ 
+    
+    function details(n, a, g) {
+      this.n=n;
+      this.a=a;
+      this.g=g;
+    }
+    c=new details('deepak', 20, 'male');
+    console.log('Object by constructor', c.n, c.a, c.g);
+    
+ 
+    
+    const people={
+      population: 1000,
+      nationality: 'Indian',
+      men: 500,
+      women: 1000,
+      total: function() {
+        const res=this.men+this.women;
+        console.log('Population = '+res);
+      },
+    };
+    people.total();
+    
+ 
+    
+    class Population {
+      constructor(population, nationality, men, women) {
+        this.population=population;
+        this.nationality=nationality;
+        this.men=men;
+        this.women=women;
+      }
+    
+      total() {
+        const res=this.men+this.women;
+        console.log(res);
+      }
+      showNation() {
+        console.log(this.nationality);
+      }
+      showPopulation() {
+        console.log('Men = '+this.men);
+        console.log('Women = '+this.women);
+      }
+    };
+
+    
+    const obj_p=new Population(1000, 'Indian', 300, 700);
+    obj_p.total();
+    obj_p.showNation();
+    
+    obj_p.showPopulation();
+
+    const nlist=[1, 2, 3, 4];
+    document.write('Array by literal');
+    for (let i=0; i<nlist.length; i++) {
+      document.write(nlist[i]+'<br>');
+    }
+    document.write('<br>');
+    
+    const arr=new Array();
+    arr[0]='D';
+    arr[1]='E'; arr[2]='E'; arr[3]='P'; arr[4]='A'; arr[5]='K';
+    document.write('Array by new keyword'+'<br>');
+    for (let i=0; i<arr.length; i++) {
+      document.write(arr[i]+'<br>');
+    }
+  
+    const df=new Array('Deepak', 'Darshan');
+    document.write('Array by constructor'+'<br>');
+    for (let i=0; i<df.length; i++) {
+      document.write(df[i]+'<br>');
+    }
+  
+    const arr1=[8, 9, 1, 5, 7, 6];
+    const arr2=['K', 'J', 'C', 'A', 'E'];
+    
+    function con_cat() {
+      const arr3=arr1.concat(arr2);
+      const res=document.getElementById('res');
+      res.innerHTML='Result = '+arr3;
+    }
+    
+    
+    function find_l() {
+      const res=document.getElementById('res');
+      res.innerHTML='Length of array1 :'+arr1.length+'<br>'+'Length of array2 :'+arr2.length;
+    }
+
+    function con_str() {
+      const res=document.getElementById('res');
+      res.innerHTML='toString() in arr1: '+arr1.toString()+'<br>toString() in arr2: '+arr2.toString();
+    }
+ 
+    function join_str() {
+      const res=document.getElementById('res');
+      res.innerHTML='join() in arr1: '+arr1.join('-')+'<br>join() in arr2: '+arr2.join('#');
+    }
+    
+
+    function arr_pop() {
+      const item1=arr1.pop();
+      const res=document.getElementById('res');
+      const item2=arr2.pop();
+      res.innerHTML='Item popped in arr1: '+item1+'<br>Item popped  in arr2: '+item2;
+    }
+
+    
+    
+    function arr_push() {
+      arr1.push(7);
+      arr2.push('F');
+      const res=document.getElementById('res');
+      res.innerHTML='New arr1 after push : '+arr1+'<br>New arr2 after push : '+arr2;
+    }
+  
+    
+    
+    function do_shift() {
+      const res=document.getElementById('res');
+      arr1.shift(); arr2.shift();
+      res.innerHTML='New arr1 after shift : '+arr1+'<br>New arr2 after shift : '+arr2;
+    }
+
+    function do_unshift() {
+      const res=document.getElementById('res');
+      arr1.unshift('14'); arr2.unshift('G');
+      res.innerHTML='New arr1 after unshift : '+arr1+'<br>New arr2 after unshift : '+arr2;
+    }
+    
+
+    function do_splice() {
+      const narr=['D', 'E', 'E', 'P', 'A', 'K']; const narr1=['D', 'E', 'E', 'P', 'A', 'K'];
+      const res=document.getElementById('res'); narr.splice(1, 0, 'E', 'F');
+      res.innerHTML='Initial array - '+narr1+'<br>'+'After splice operation '+narr;
+    }
+
+    function do_sort() {
+      const arr3=arr1.sort(function(a, b) {
+        return a-b;
+      });
+      const arr4=arr2.sort();
+      const res=document.getElementById('res');
+      res.innerHTML='Sort of arr1 : '+arr3+'<br>Sort of arr2 : '+arr4;
+    }
+
+    
+    async function addNum(a, b) {
+      return new Promise((resolve)=>{
+        setTimeout(()=>{
+          const sum=a+b;
+          resolve(sum);
+        }, 1000);
+      });
+    }
+    
+    
+    async function add() {
+      try {
+        console.log('Addition using async await function');
+        const res=await addNum(5, 3);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    add();
+  
+    const doPromise= new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        const status=true;
+        if (status) {
+          const res='Success';
+          resolve(res);
+        } else {
+          const res='Error';
+          reject(res);
+        }
+      }, 1000);
+    });
+    doPromise.then((result)=>{
+      console.log('Status :', result);
+    }).catch((error)=>{
+      console.log('Status :', error);
+    });
+    
+ 
+    const doAdd=new Promise((resolve)=>{
+      setTimeout(()=>{
+        const res=14+8+3;
+        resolve(res);
+      }, 2000);
+    });
+    
+    
+    doAdd.then((resul)=>{
+      console.log('Addition= ', resul);
+    }).catch((error)=>{
+      console.log(error);
+    });
+    
+    
+    const readJ=()=>{
+      fetch('abc.json').then((response)=>{
+        if (!response.ok) {
+          console.log('Error');
+        }
+        return response.json();
+      }).then((data)=>{
+        console.log(data);
+      }).catch((error)=>{
+        console.log(error);
+      });
+    };
+    
+    
+
+    function do_json() {
+      const json_data='{'name':'deepak','age':10,'gender':'male'}';
+    
+      const data=JSON.parse(json_data);
+      const res=document.getElementById('res');
+      res.innerHTML=data.name+'-'+data.age+'-'+data.gender;
+    }
+    
+
+    
+    const str='deepak';
+    console.log(str);
+    const st=new String('deepak');
+    console.log(st);
+    
+    console.log(st[1]); 
+    
+    console.log(st.charAt(1)); 
+    
+    const l1='a'; const l2='b';
+    if (l1>l2) {
+      console.log(`${l1} is greater than ${l2}`);
+    } else {
+      console.log(`${l2} is greater than ${l1}`);
+    }
+    
+
+    
+    const toU=str.toUpperCase();
+    console.log('Uppercase= ', toU);
+    const toL=toU.toLowerCase();
+    console.log('Lowercase = ', toL);
+  
+    function change() {
+      document.getElementById('el1').innerHTML='Changed on button click';
+    }
+    
+   
+    
+    const w1='deepak';
+    const w2=new String('deepak');
+    console.log(typeof w1); 
+    console.log(typeof w2); 
+  
+    const exp='5*5';
+    const exp_o=new String('5*5');
+    
+    console.log(eval(exp));
+    console.log(eval(exp_o)); 
+    
+   
+    console.log(eval(exp_o.valueOf())); 
+    
+
+    
+    const a1='deepak'; const a2='darshan';
+    
+    const a3=a1+' '+a2;
+    console.log(a3);
+    
+    
+    console.log(a1.length); 
+    
+
+    console.log(a3.substring(0, 6)); 
+    
+  
+    console.log(a3.slice(0, 2)); 
+    
+    
+    console.log(a3.indexOf('darshan')); 
+
+    console.log(a3.replace('darshan', 'deepak')); 
+    
+    
+    const rt='    Deepak   Darshan  ';
+    console.log(rt);
+    console.log(rt.trim()); 
+    const names='deepak,darshan,m';
+    const list=names.split(',');
+    console.log(list);
+    
+  
+    const b1='hi'; const b2='hello'; const nn='Deepak';
+    console.log(b1==b2); 
+    
+    
+    console.log(`${b1} ${nn}`);
+   
+    
+    'use strict';
+    function show() {
+      x=5;
+      console.log(x); 
+    }
+    show();
+    
+    var_do();
