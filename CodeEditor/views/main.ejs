@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>AI Code Suggestor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        .header {
+            background-color: #025aff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 2 3 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        .editor {
+            width: 80%;
+            max-width: 800px;
+            background-color: #025aff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .editor textarea {
+            width: 100%;
+            height: 400px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .btn {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: #a4a4a4;
+        }p{
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI Code Suggestor</h1>
+    </div>
+    <div class="container">
+        
+        <div class="editor">
+            <form id ="codeForm" method="POST" action="/">
+                <p>  Press TAB to get Code Suggesstion</p>
+                <textarea id = "code" name="code" placeholder="Enter your code here..."><%=code%></textarea>
+                <button class="btn" id="getSuggestion">Get Suggestion</button>
+        </form>
+        <script>
+            
+            document.addEventListener('keydown', function(event) {
+               
+                if (event.key === 'Tab') {
+                    event.preventDefault();
+                    document.getElementById('getSuggestion').click();
+                    
+                }
+            });
+        </script>
+        </div>
+    </div>
+</body>
+</html>
